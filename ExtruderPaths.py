@@ -58,7 +58,6 @@ def GenerateAttributes(layer_name, color):
 
 
 if __name__=="__main__":
-    #input geo & options
     get = Rhino.Input.Custom.GetObject()
     get.SetCommandPrompt("Select geometry to generate toolpaths")
     
