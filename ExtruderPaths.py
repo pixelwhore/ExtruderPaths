@@ -58,10 +58,24 @@ def GenerateAttributes(layer_name, color):
 
 
 if __name__=="__main__":
-    test, base_geo = Rhino.Input.RhinoGet.GetOneObject("Select geo to generate paths", False, None)
-    if test == Rhino.Commands.Result.Success:
-        contour_geo = ContourObject(base_geo.Brep(), 0.25, 0.25, 30)
-        contour_geo.Contour()
-        contour_geo.Bake()
-    else:
-        print("Selection failed...")       
+    #input geo & options
+    get = Rhino.Input.Custom.GetObject()
+    get.SetCommandPrompt("Select geometry to generate toolpaths")
+    
+    vert = Rhino.Input.Custom.OptionDouble(0.25, 0.10, 1.00)
+    tran = Rhino.Input.Custom.OptionDouble(0.25, 0.10, 1.00)
+    refc = Rhino.Input.Custom.OptionDouble(15.0, 0.0, 90.0)
+    
+    get.AddOptionDouble("Vertical_spacing", vert)
+    get.AddOptionDouble("Transition_length", tran)
+    get.AddOptionDouble("Reference_angle", refc)
+    
+    while True:
+        result = get.Get()
+        if result==Rhino.Input.GetResult.Option:
+            continue
+        break
+    
+    contour_geo = ContourObject(get.Object(0).Brep(), vert.CurrentValue, tran.CurrentValue, refc.CurrentValue)
+    contour_geo.Contour()
+    contour_geo.Bake()
