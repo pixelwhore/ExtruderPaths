@@ -58,6 +58,9 @@ def GenerateAttributes(layer_name, color):
 
 
 if __name__=="__main__":
+    if scriptcontext.doc.ModelUnitSystem != Rhino.UnitSystem.Millimeters:
+        scriptcontext.doc.AdjustModelUnitSystem(Rhino.UnitSystem.Millimeters, True)
+    
     get = Rhino.Input.Custom.GetObject()
     get.SetCommandPrompt("Select geometry to generate toolpaths")
     
