@@ -25,7 +25,7 @@ class ContourObject():
         
         for curve in crvs:
             tp.append(curve.Trim(curve.LengthParameter(self.horizontal_spacing)[1], curve.Domain.Max))
-            rp.append(tp[-1].Offset(Rhino.Geometry.Plane.WorldXY, math.tan(math.radians(self.refpath_angle)) * 1, .050, 0)[0])
+            rp.append(tp[-1].Offset(Rhino.Geometry.Plane.WorldXY, math.tan(math.radians(self.refpath_angle)) * 1, 1.25, 0)[0])
             rp[-1].Translate(0, 0, 1)
             
         for i in xrange(0,len(tp)-1):
@@ -64,8 +64,8 @@ if __name__=="__main__":
     get = Rhino.Input.Custom.GetObject()
     get.SetCommandPrompt("Select geometry to generate toolpaths")
     
-    vert = Rhino.Input.Custom.OptionDouble(0.25, 0.10, 1.00)
-    tran = Rhino.Input.Custom.OptionDouble(0.25, 0.10, 1.00)
+    vert = Rhino.Input.Custom.OptionDouble(6.50, 2.50, 25.00)
+    tran = Rhino.Input.Custom.OptionDouble(6.50, 2.50, 25.00)
     refc = Rhino.Input.Custom.OptionDouble(15.0, 0.0, 90.0)
     
     get.AddOptionDouble("Vertical_spacing", vert)
